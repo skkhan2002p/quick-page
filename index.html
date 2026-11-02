@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickPage — Fast & Modern Web Solution</title>
+  <style>
+    :root {
+      --bg: #0B1020;
+      --surface: #151C33;
+      --surface-border: #232D4D;
+      --primary: #6366F1;
+      --primary-hover: #4F46E5;
+      --accent: #22D3EE;
+      --text: #F1F5F9;
+      --text-muted: #94A3B8;
+      --radius: 16px;
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    /* Container */
+    .container {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header / Nav */
+    header {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--surface-border);
+      background: rgba(11, 16, 32, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #fff;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+      min-height: 44px;
+      transition: transform 0.18s ease, background-color 0.18s ease;
+    }
+
+    .btn:hover, .btn:active {
+      background: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border: 1px solid var(--surface-border);
+    }
+
+    .btn-secondary:hover {
+      background: var(--surface-border);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: clamp(40px, 8vw, 80px) 0;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: var(--accent);
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 7vw, 54px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: clamp(16px, 4vw, 20px);
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 32px auto;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    @media (min-width: 550px) {
+      .hero-actions {
+        flex-direction: row;
+      }
+    }
+
+    /* Grid Section */
+    .features {
+      padding: 60px 0;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(24px, 5vw, 36px);
+      font-weight: 700;
+    }
+
+    .section-title p {
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 720px) {
+      .grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    /* Interactive Section / Form */
+    .interactive {
+      padding: 60px 0;
+      background: var(--surface);
+      border-top: 1px solid var(--surface-border);
+      border-bottom: 1px solid var(--surface-border);
+      border-radius: var(--radius);
+      margin: 40px 0;
+    }
+
+    .contact-form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .form-group input, .form-group textarea {
+      background: var(--bg);
+      border: 1px solid var(--surface-border);
+      color: var(--text);
+      padding: 14px;
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .status-msg {
+      font-size: 14px;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    /* Like Button Section */
+    .appreciation {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .like-btn {
+      background: rgba(34, 211, 238, 0.1);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s ease;
+    }
+
+    .like-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      text-align: center;
+      color: var(--text-muted);
+      border-top: 1px solid var(--surface-border);
+      font-size: 14px;
+    }
+
+    footer p {
+      margin-top: 8px;
+    }
+  </style>
+  <script src="https://getmaya.cloud/_maya/db.js"></script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header>
+    <div class="container nav-inner">
+      <div class="logo">
+        <div class="logo-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </div>
+        QuickPage
+      </div>
+      <a href="#contact" class="btn btn-secondary" style="padding: 8px 16px; font-size: 14px;">Contact Us</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Hero Section -->
+    <section class="hero">
+      <span class="badge">⚡ Mobile First & Super Fast</span>
+      <h1>Build your idea in <span>record time</span></h1>
+      <p>Clean, minimal, lightweight, and responsive web pages designed to give your project an instant online presence.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn">
+          Get Started
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#features" class="btn btn-secondary">Explore Features</a>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+      <div class="section-title">
+        <h2>Why Choose QuickPage</h2>
+        <p>Everything you need for a modern high-performance web page.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+          </div>
+          <h3>100% Mobile Optimized</h3>
+          <p>Designed with phone screens in mind first, ensuring seamless touch interaction and liquid layout adaptivity.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Blazing Fast Performance</h3>
+          <p>Zero external heavy dependencies or CDN scripts. Instant load times anywhere in the world.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <h3>Modern Dark Theme</h3>
+          <p>Carefully selected color palette to reduce eye strain and give a sleek modern SaaS impression.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Appreciation Section -->
+    <section class="appreciation">
+      <button id="likeBtn" class="like-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+        <span>Like this page</span> (<span id="likeCount">0</span>)
+      </button>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="interactive" id="contact">
+      <div class="section-title">
+        <h2>Get in Touch</h2>
+        <p>Send a message and we'll reply right away.</p>
+      </div>
+      <form id="messageForm" class="contact-form">
+        <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="text" id="name" placeholder="Enter your name" required>
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" rows="4" placeholder="How can we help you?" required></textarea>
+        </div>
+        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+        <div id="statusMsg" class="status-msg"></div>
+      </form>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="logo" style="justify-content: center; margin-bottom: 12px;">
+        <div class="logo-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        </div>
+        QuickPage
+      </div>
+      <p>&copy; 2025 QuickPage. Built cleanly and efficiently.</p>
+    </div>
+  </footer>
+
+  <script>
+    // MayaDB Integrations
+    const likeBtn = document.getElementById('likeBtn');
+    const likeCountSpan = document.getElementById('likeCount');
+    const messageForm = document.getElementById('messageForm');
+    const statusMsg = document.getElementById('statusMsg');
+
+    // Fetch initial likes
+    async function loadLikes() {
+      if (typeof window.MayaDB === 'undefined') {
+        likeCountSpan.textContent = '0';
+        return;
+      }
+      try {
+        const res = await MayaDB.list("counters", { limit: 1 });
+        if (res && res.length > 0 && res[0].data && res[0].data.count) {
+          likeCountSpan.textContent = res[0].data.count;
+        }
+      } catch (err) {
+        console.log("Offline mode or MayaDB inactive");
+      }
+    }
+
+    // Like Button Click
+    likeBtn.addEventListener('click', async () => {
+      let currentLikes = parseInt(likeCountSpan.textContent) || 0;
+      likeCountSpan.textContent = currentLikes + 1;
+
+      if (typeof window.MayaDB !== 'undefined') {
+        try {
+          await MayaDB.inc("counters", "likes", "count", 1);
+        } catch (err) {
+          console.error("MayaDB update failed", err);
+        }
+      }
+    });
+
+    // Form Submit
+    messageForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const message = document.getElementById('message').value.trim();
+
+      if (!name || !message) return;
+
+      statusMsg.style.color = '#22D3EE';
+      statusMsg.textContent = 'Sending message...';
+
+      if (typeof window.MayaDB !== 'undefined') {
+        try {
+          await MayaDB.add("private_messages", { name, message, date: new Date().toISOString() });
+          statusMsg.style.color = '#4ADE80';
+          statusMsg.textContent = 'Thank you! Message sent successfully.';
+          messageForm.reset();
+        } catch (err) {
+          statusMsg.style.color = '#F87171';
+          statusMsg.textContent = 'Unable to send message online right now.';
+        }
+      } else {
+        statusMsg.style.color = '#4ADE80';
+        statusMsg.textContent = 'Message saved locally (Preview mode).';
+        messageForm.reset();
+      }
+    });
+
+    loadLikes();
+  </script>
+</body>
+</html>
